@@ -5,8 +5,17 @@ const updateEyeCoords = () => {
   eyeCoords.y = (tempRect.top + tempRect.bottom) / 2;
   console.log(eyeCoords);
 };
+const checkOffset = ({ x, y }) => {
+  const delta = { x: x - eyeCoords.x, y: y - eyeCoords.y };
+
+  const angle = (Math.atan2(delta.y, delta.x) * 180) / Math.PI;
+  console.log(angle);
+  document
+    .querySelector(".googly")
+    .style.setProperty("--googly-rotate", `${angle}deg`);
+};
+
 updateEyeCoords();
 document.addEventListener("scroll", updateEyeCoords);
-document.addEventListener("mousemove", ({ x, y }) => {
-  // console.log(x, y);
-});
+document.addEventListener("resize", updateEyeCoords);
+document.addEventListener("mousemove", checkOffset);
